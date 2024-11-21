@@ -11,7 +11,7 @@ const swaggerOptions = {
         },
         servers: [
             {
-                url: 'http://localhost:3001', // Replace with your production URL when deployed
+                url: 'https://project1-370z.onrender.com/', // Replace with your production URL when deployed
             },
         ],
     },

@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-//const User = require('../models/User');
+const User = require('../models/User');
 
 // Get all users
 const getAll = async (req, res) => {

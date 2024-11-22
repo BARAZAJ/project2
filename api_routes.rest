@@ -25,9 +25,10 @@ Content-Type: application/json
 
 {
     "email": "newuser@example.com",
-    "username": "newuser123",
-    "name": "New User",
-    "ipaddress": "127.0.0.1"
+    "firstname": "newuser123",
+    "lastname": "New User",
+    "favoritecolor": "green",
+    "birthdate":"01/01/2000"
 }
 
 ###
@@ -37,10 +38,11 @@ PUT http://localhost:3001/api/users/673754c7fbe6d835030b73dc
 Content-Type: application/json
 
 {
-    "email": "updateduser@example.com",
-    "username": "updateduser123",
-    "name": "Updated User",
-    "ipaddress": "192.168.1.1"
+    "email": "newuser@example.com",
+    "firstname": "newuser123",
+    "lastname": "New User",
+    "favoritecolor": "green",
+    "birthdate":"01/01/2000"
 }
 
 # Replace {{USER_ID}} with an actual user ID

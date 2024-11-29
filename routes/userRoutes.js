@@ -6,8 +6,20 @@ const {
     updateUser,
     deleteUser,
 } = require('../controllers/users');
+const { body, param, validationResult } = require('express-validator');
 
 const router = express.Router();
+
+/**
+ * Helper function for validation error handling
+ */
+const validate = (req, res, next) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return res.status(400).json({ errors: errors.array() });
+    }
+    next();
+};
 
 /**
  * @swagger
@@ -48,7 +60,12 @@ router.get('/', getAll);
  *       404:
  *         description: User not found
  */
-router.get('/:id', getSingle);
+router.get(
+    '/:id',
+    param('id', 'Invalid user ID').isMongoId(),
+    validate,
+    getSingle
+);
 
 /**
  * @swagger
@@ -65,7 +82,15 @@ router.get('/:id', getSingle);
  *       201:
  *         description: User created successfully
  */
-router.post('/', createUser);
+router.post(
+    '/',
+    body('email', 'Invalid email').isEmail(),
+    body('username', 'Username is required').notEmpty(),
+    body('name', 'Name is required').notEmpty(),
+    body('ipaddress', 'Invalid IP address').isIP(),
+    validate,
+    createUser
+);
 
 /**
  * @swagger
@@ -89,7 +114,16 @@ router.post('/', createUser);
  *       200:
  *         description: User updated successfully
  */
-router.put('/:id', updateUser);
+router.put(
+    '/:id',
+    param('id', 'Invalid user ID').isMongoId(),
+    body('email', 'Invalid email').optional().isEmail(),
+    body('username', 'Username is required').optional().notEmpty(),
+    body('name', 'Name is required').optional().notEmpty(),
+    body('ipaddress', 'Invalid IP address').optional().isIP(),
+    validate,
+    updateUser
+);
 
 /**
  * @swagger
@@ -107,14 +141,11 @@ router.put('/:id', updateUser);
  *       204:
  *         description: User deleted successfully
  */
-router.delete('/:id', deleteUser);
+router.delete(
+    '/:id',
+    param('id', 'Invalid user ID').isMongoId(),
+    validate,
+    deleteUser
+);
 
 module.exports = router;
-
-
-
-
-
-
-
-
